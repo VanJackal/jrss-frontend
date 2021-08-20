@@ -59,7 +59,7 @@ class ListView extends React.Component {
         return (
             <Table size="small">
                 <this.Header />
-                {this.Body() || "test"}
+                <this.Body />
             </Table>
         )
     }
