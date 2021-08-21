@@ -35,7 +35,7 @@ class ListView extends React.Component {
                 <TableBody>
                     {
                         this.state.rowData.map((item) => (
-                            <TableRow key={item._id} onClick={() => console.log(item._id)}>
+                            <TableRow key={item._id} onClick={() => this.props.clickFunc(item._id)}>
                                 <TableCell>{item.title}</TableCell>
                             </TableRow>
                         ))

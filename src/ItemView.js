@@ -6,11 +6,19 @@ class ItemView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { articleID: props.articleID, article: null };
+        this.state = { article: null };
     }
 
     componentDidMount() {
-        if (this.state.articleID && (!this.state.article || this.state.article._id != this.state.articleID)) {
+        this.updateContent();
+    }
+
+    componentDidUpdate() {
+        this.updateContent();
+    }
+
+    updateContent() {
+        if (this.props.articleID && (!this.state.article || this.state.article._id !== this.props.articleID)) {
             (
                 async () => {
                     try {
@@ -24,11 +32,11 @@ class ItemView extends React.Component {
     }
 
     updateArticle = async () => {
-        return await (await axios.get(`${config.API}/articles/${this.state.articleID}`)).data
+        return await (await axios.get(`${config.API}/articles/${this.props.articleID}`)).data
     }
 
     updateID = (id) => {
-        this.setState({articleID:id})
+        this.setState({ articleID: id })
     }
 
     render = () => {
