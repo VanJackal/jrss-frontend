@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {articleID:"60a829818fb25cc1440c7928"}
+    this.state = {articleID:"60a829818fb25cc1440c7928", selected:[]}
   }
 
   changeArticle = (id) => {
@@ -18,7 +18,7 @@ class App extends React.Component {
       <div style={{ height: '100vh' }} className="App">
         <Grid container style={{ height: "100%" }} direction="column">
           <Grid item xs={12} style={{ maxHeight: "40%", overflow: "auto" }}>
-            <ListView clickFunc={this.changeArticle}/>
+            <ListView selected={this.state.articleID} clickFunc={this.changeArticle}/>
           </Grid>
           <Grid item xs={12} style={{ maxHeight: "60%", overflow: "auto" }}>
             <ItemView articleID={this.state.articleID} />
