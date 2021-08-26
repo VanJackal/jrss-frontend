@@ -1,4 +1,5 @@
 import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import axios from "axios";
 import React from "react";
 const config = require("./config.json");
@@ -37,6 +38,8 @@ class ListView extends React.Component {
                         this.state.rowData.map((item) => (
                             <TableRow selected={this.props.selected === item._id} key={item._id} onClick={() => this.props.clickFunc(item._id)}>
                                 <TableCell>{item.title}</TableCell>
+                                <TableCell><FiberManualRecordIcon color={item.read ? 'action' : 'primary'} fontSize='small'/></TableCell>
+                                <TableCell>{item.pubDate}</TableCell>
                             </TableRow>
                         ))
                     }
@@ -50,6 +53,8 @@ class ListView extends React.Component {
             <TableHead>
                 <TableRow>
                     <TableCell>Title</TableCell>
+                    <TableCell>Read</TableCell>
+                    <TableCell>PubDate</TableCell>
                 </TableRow>
             </TableHead>
         )
