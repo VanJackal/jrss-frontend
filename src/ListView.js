@@ -4,6 +4,11 @@ import axios from "axios";
 import React from "react";
 const config = require("./config.json");
 
+function updateRead(articleID, readState){
+    console.log(articleID)
+    axios.put(`${config.API}/articles/${articleID}`,{read:readState});
+}
+
 class ListView extends React.Component {
     constructor(props) {
         super(props);
@@ -35,13 +40,21 @@ class ListView extends React.Component {
             return (
                 <TableBody>
                     {
-                        this.state.rowData.map((item) => (
-                            <TableRow selected={this.props.selected === item._id} key={item._id} onClick={() => this.props.clickFunc(item._id)}>
+                        this.state.rowData.map((item) => {
+                            let selState = false;
+                            if(this.props.selected === item._id){
+                                selState = true;
+                                item.read = true;
+                                updateRead(item._id, true);
+                            }
+                            let rowStyle = {'fontWeight': item.read ? 'normal' : 'bold'};
+                            return(
+                            <TableRow style={rowStyle} selected={selState} key={item._id} onClick={() => this.props.clickFunc(item._id)}>
                                 <TableCell>{item.title}</TableCell>
                                 <TableCell><FiberManualRecordIcon color={item.read ? 'action' : 'primary'} fontSize='small'/></TableCell>
                                 <TableCell>{item.pubDate}</TableCell>
                             </TableRow>
-                        ))
+                        )})
                     }
                 </TableBody>
             )
