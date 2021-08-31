@@ -18,8 +18,8 @@ class ListView extends React.Component {
         this.updateContent();
     }
 
-    componentDidUpdate() {
-        this.updateContent();
+    componentDidUpdate() {//I think this is a inefficient way of doing this but it works for now
+        this.updateContent();//TODO Improve improve this so the entire list isnt reloaded
     }
 
     updateContent() {

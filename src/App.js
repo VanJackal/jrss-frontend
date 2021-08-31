@@ -15,7 +15,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div style={{ height: '100vh' }} className="App">
+      <div style={{ height: '100%' }} className="App">
         <Grid container style={{ height: "100%" }} direction="column">
           <Grid item xs={12} style={{ maxHeight: "40%", overflow: "auto" }}>
             <ListView selected={this.state.articleID} clickFunc={this.changeArticle}/>
