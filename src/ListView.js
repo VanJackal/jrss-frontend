@@ -4,9 +4,8 @@ import axios from "axios";
 import React from "react";
 const config = require("./config.json");
 
-function updateRead(articleID, readState){
-    console.log(articleID)
-    axios.put(`${config.API}/articles/${articleID}`,{read:readState});
+function updateRead(article, readState){
+    axios.put(`${config.API}/articles/${article._id}`,{read:readState});
 }
 
 class ListView extends React.Component {
@@ -16,6 +15,14 @@ class ListView extends React.Component {
     }
 
     componentDidMount() {
+        this.updateContent();
+    }
+
+    componentDidUpdate() {
+        this.updateContent();
+    }
+
+    updateContent() {
         if (!this.state.data) {
             (
                 async () => {
@@ -44,14 +51,13 @@ class ListView extends React.Component {
                             let selState = false;
                             if(this.props.selected === item._id){
                                 selState = true;
-                                item.read = true;
-                                updateRead(item._id, true);
+                                updateRead(item, true);
                             }
                             let rowStyle = {'fontWeight': item.read ? 'normal' : 'bold'};
                             return(
-                            <TableRow style={rowStyle} selected={selState} key={item._id} onClick={() => this.props.clickFunc(item._id)}>
-                                <TableCell>{item.title}</TableCell>
-                                <TableCell><FiberManualRecordIcon color={item.read ? 'action' : 'primary'} fontSize='small'/></TableCell>
+                            <TableRow style={rowStyle} selected={selState} key={item._id}>
+                                <TableCell onClick={() => this.props.clickFunc(item._id)}>{item.title}</TableCell>
+                                <TableCell><FiberManualRecordIcon onClick={() => updateRead(item,!item.read)} color={item.read ? 'action' : 'primary'} fontSize='small'/></TableCell>
                                 <TableCell>{item.pubDate}</TableCell>
                             </TableRow>
                         )})
