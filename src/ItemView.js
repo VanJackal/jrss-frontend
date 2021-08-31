@@ -31,7 +31,7 @@ class ItemView extends React.Component {
         }
     }
 
-    updateArticle = async () => {
+    updateArticle = async () => {//change article being viewed
         return await (await axios.get(`${config.API}/articles/${this.props.articleID}`)).data
     }
 
