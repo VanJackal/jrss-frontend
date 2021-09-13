@@ -40,10 +40,10 @@ class App extends React.Component {
   AppView = () => {
     return (
       <Grid container direction="row" style={styles.container}>
-        <Grid item>
+        <Grid item style={{width:"20%"}}>
           <FeedsView clickFunc={this.changeFeed} selected={this.state.feedID}/>
         </Grid>
-        <Grid item style={{height:"100%"}}>
+        <Grid item style={{width:"80%", height:"100%"}}>
           <this.FeedView/>
         </Grid>
       </Grid>
