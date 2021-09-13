@@ -1,6 +1,7 @@
 import React from "react"
 import ListView from "./ListView"
 import ItemView from "./ItemView"
+import FeedsView from "./FeedsView"
 import TopBar from "./TopBar"
 import { Grid } from "@material-ui/core"
 
@@ -12,11 +13,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { articleID: null, selected: [] }
+    this.state = { articleID: null, feedID: null, selected: [] }
   }
 
   changeArticle = (id) => {
     this.setState({ articleID: id });
+  }
+  changeFeed = (id) =>{
+    this.setState({feedID:id});
   }
   render() {
     return (
@@ -26,11 +30,24 @@ class App extends React.Component {
             <TopBar feedid={"TestFeed"}/>
           </Grid>
           <Grid item style={{height:"calc(100% - 3em)"}}>
-            <this.FeedView/>
+            <this.AppView/>
           </Grid>
         </Grid>
       </div>
     );
+  }
+
+  AppView = () => {
+    return (
+      <Grid container direction="row" style={styles.container}>
+        <Grid item>
+          <FeedsView clickFunc={this.changeFeed} selected={this.state.feedID}/>
+        </Grid>
+        <Grid item style={{height:"100%"}}>
+          <this.FeedView/>
+        </Grid>
+      </Grid>
+    )
   }
 
   FeedView = () => {
