@@ -52,7 +52,7 @@ class App extends React.Component {
 
   FeedView = () => {
     return (
-      <Grid container style={{ height: "100%",maxWidth:"100%" }} wrap="nowrap" direction="column">
+      <Grid container style={{ height: "100%" }} wrap="nowrap" direction="column">
         <Grid item xs={12} style={{ overflowY: "scroll", flexBasis:"40%"}}>
           <ListView feedid={"TestFeed"} selected={this.state.articleID} clickFunc={this.changeArticle} />
         </Grid>
