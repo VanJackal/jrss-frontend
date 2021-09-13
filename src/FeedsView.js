@@ -51,7 +51,7 @@ class FeedsView extends React.Component {
                             }
                             return(
                             <TableRow selected={selState} key={item._id}>
-                                <TableCell onClick={()=>{this.props.clickFunc(item._id)}}>{item.feedid || "Loading..."}</TableCell>
+                                <TableCell onClick={()=>{this.props.clickFunc(item._id)}}>{item.title || "Loading..."}</TableCell>
                             </TableRow>
                         )})
                     }

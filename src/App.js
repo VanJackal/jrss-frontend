@@ -27,7 +27,7 @@ class App extends React.Component {
       <div style={{ height: '100vh', width: '100vw', overflow:"auto"}}>
         <Grid container direction="column" style={styles.container} wrap="nowrap">
           <Grid item style={{height:"3em",}}>
-            <TopBar feedid={"TestFeed"}/>
+            <TopBar feedid={this.state.feedID}/>
           </Grid>
           <Grid item style={{height:"calc(100% - 3em)"}}>
             <this.AppView/>
@@ -54,7 +54,7 @@ class App extends React.Component {
     return (
       <Grid container style={{ height: "100%" }} wrap="nowrap" direction="column">
         <Grid item xs={12} style={{ overflowY: "scroll", flexBasis:"40%"}}>
-          <ListView feedid={"TestFeed"} selected={this.state.articleID} clickFunc={this.changeArticle} />
+          <ListView feedid={this.state.feedID} selected={this.state.articleID} clickFunc={this.changeArticle} />
         </Grid>
         <Grid item xs={12} style={{ overflow: "auto", flexBasis:"60%"}}>
           <ItemView articleID={this.state.articleID} />
