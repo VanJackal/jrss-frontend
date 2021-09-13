@@ -37,7 +37,7 @@ class ListView extends React.Component {
     }
 
     getData = async () => {
-        return await (await axios.get(`${config.API}/articles`)).data
+        return await (await axios.get(`${config.API}/feeds/${this.props.feedid}/articles`)).data
     }
 
     Body = () => {

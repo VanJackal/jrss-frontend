@@ -10,7 +10,7 @@ class TopBar extends React.Component {
     }
 
     refreshFeed = async () => {
-        await axios.post(`${config.API}/articles`,{url:"http://node1.h.njackal.com/feed"})
+        await axios.post(`${config.API}/feeds/${this.props.feedid}`,{url:"http://node1.h.njackal.com/feed"})
     }
 
     render() {
