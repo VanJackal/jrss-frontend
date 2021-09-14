@@ -3,6 +3,7 @@ import axios from "axios";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core"
 import { Refresh } from "@material-ui/icons"
 import AddFeedButton from "./AddFeedButton";
+import RemoveFeedButton from "./RemoveFeedButton";
 const config = require("./config.json");
 
 class TopBar extends React.Component {
@@ -20,6 +21,7 @@ class TopBar extends React.Component {
                 <Toolbar variant="dense">
                     <IconButton size="small" onClick={()=>{this.refreshFeed()}}><Refresh /></IconButton>
                     <AddFeedButton/>
+                    <RemoveFeedButton feedid={this.props.feedid}/>
                 </Toolbar>
             </div>
         )
