@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import sanitizeHtml from "sanitize-html";
 const config = require("./config.json");
 
 class ItemView extends React.Component {
@@ -39,13 +40,25 @@ class ItemView extends React.Component {
         this.setState({ articleID: id })
     }
 
+    Description = () =>{
+        if(this.state.article?.description){
+            let options = {allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),allowedAttributes: {a:['href', 'name', 'target'],img:['src','title','alt']}};
+            let clean = sanitizeHtml(this.state.article.description,options);
+            return(<div dangerouslySetInnerHTML={{__html:clean}}></div>);
+        } else {
+            return (
+                <p>Loading...</p>
+            )
+        }
+    }
+
     render = () => {
         return (
             <div>
                 <h1>
                     {this.state.article?.title || "Loading..."}
                 </h1>
-                <p>{this.state.article?.description || "Loading.."}</p>
+                <this.Description/>
             </div>
         )
     }

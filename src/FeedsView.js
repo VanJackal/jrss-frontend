@@ -37,7 +37,6 @@ class FeedsView extends React.Component {
     }
 
     Body = () => {
-        console.log.apply(this.state.rowData);
         if (!this.state.rowData) {
             return (<p>Loading...</p>)//TODO change the loading to replace the table instead of the the table body
         } else {
