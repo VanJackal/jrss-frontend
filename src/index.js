@@ -1,10 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Login from './Login'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Switch } from "react-router-dom"
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
   <React.StrictMode>

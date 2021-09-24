@@ -1,5 +1,7 @@
 import React from "react";
+import axios from "axios";
 import { TextField, Paper, Box, Button } from "@material-ui/core";
+const config = require("./config.json");
 
 class Login extends React.Component {
     style = {
@@ -15,7 +17,13 @@ class Login extends React.Component {
     pass = null;
 
     handleButton = () => {
-        alert(`${this.user.value} ${this.pass.value}`);
+        axios.post(`${config.API}/users/login`,{username:this.user.value,password:this.pass.value}).then((res) => {
+            console.log(res.status);
+            console.log(res)
+            if(res.status == 200){
+                //this.props.history.push("/");
+            }
+        });
     }
 
     render() {
@@ -30,6 +38,7 @@ class Login extends React.Component {
                         <TextField inputRef={ref => { this.user = ref }} style={this.itemStyle} id="username" label="Username" variant="outlined" />
                         <TextField inputRef={ref => { this.pass = ref }} style={this.itemStyle} type="password" id="password" label="Password" variant="outlined" />
                         <Button onClick={this.handleButton} style={this.itemStyle} variant="contained">Login</Button>
+                        <a href="/">Test</a>
                     </Box>
                 </Paper>
             </Box>
