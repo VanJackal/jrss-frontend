@@ -20,7 +20,7 @@ class Login extends React.Component {
         axios.post(`${config.API}/users/login`,{username:this.user.value,password:this.pass.value}).then((res) => {
             console.log(res.status);
             console.log(res)
-            if(res.status == 200){
+            if(res.status === 200){
                 //this.props.history.push("/");
             }
         });

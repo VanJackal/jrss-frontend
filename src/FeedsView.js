@@ -1,5 +1,4 @@
 import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import axios from "axios";
 import React from "react";
 const config = require("./config.json");
@@ -38,7 +37,9 @@ class FeedsView extends React.Component {
 
     Body = () => {
         if (!this.state.rowData) {
-            return (<p>Loading...</p>)//TODO change the loading to replace the table instead of the the table body
+            return (<TableBody>
+                <TableRow><TableCell>Loading...</TableCell></TableRow>
+            </TableBody>)//TODO change the loading to replace the table instead of the the table body
         } else {
             return (
                 <TableBody>

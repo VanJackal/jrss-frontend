@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 const config = require("./config.json");
 
-export default function AddFeedButton(props) {
+export default function RemoveFeedButton(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
