@@ -2,7 +2,7 @@ import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/c
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import axios from "axios";
 import React from "react";
-const config = require("./config.json");
+import config from './config.json';
 
 function updateRead(article, readState){
     axios.put(`${config.API}/articles/${article._id}`,{read:readState});

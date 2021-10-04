@@ -4,7 +4,7 @@ import { Toolbar, IconButton } from "@material-ui/core"
 import { Refresh } from "@material-ui/icons"
 import AddFeedButton from "./AddFeedButton";
 import RemoveFeedButton from "./RemoveFeedButton";
-const config = require("./config.json");
+import config from './config.json';
 
 class TopBar extends React.Component {
 

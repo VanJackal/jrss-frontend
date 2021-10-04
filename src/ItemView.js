@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import sanitizeHtml from "sanitize-html";
-const config = require("./config.json");
+import config from './config.json';
 
 class ItemView extends React.Component {
     constructor(props) {

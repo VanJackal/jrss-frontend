@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { TextField, Paper, Box, Button } from "@material-ui/core";
-const config = require("./config.json");
+import config from './config.json';
 
 class Login extends React.Component {
     style = {

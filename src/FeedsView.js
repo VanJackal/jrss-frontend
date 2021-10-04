@@ -1,7 +1,7 @@
 import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
 import axios from "axios";
 import React from "react";
-const config = require("./config.json");
+import config from './config.json';
 
 class FeedsView extends React.Component {
     constructor(props) {
