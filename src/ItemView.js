@@ -5,11 +5,10 @@ import config from './config.json';
 
 function ItemView(props) {
     const [article, setArticle] = React.useState(null);
-    const [articleID, setArticleID] = React.useState(null);
     React.useEffect(updateContent)
 
     function updateContent() {
-        if (articleID && (!article || article._id !== props.articleID)) {
+        if (!article || article._id !== props.articleID) {
             (
                 async () => {
                     try {
@@ -24,10 +23,6 @@ function ItemView(props) {
 
     let updateArticle = async () => {//change article being viewed
         return await (await axios.get(`${config.API}/articles/${props.articleID}`)).data
-    }
-
-    let updateID = (id) => {
-        setArticleID(id);
     }
 
     let Description = () => {
