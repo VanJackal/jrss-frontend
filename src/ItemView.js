@@ -3,27 +3,17 @@ import axios from "axios";
 import sanitizeHtml from "sanitize-html";
 import config from './config.json';
 
-class ItemView extends React.Component {
-    constructor(props) {
-        super(props);
+function ItemView(props) {
+    const [article, setArticle] = React.useState(null);
+    const [articleID, setArticleID] = React.useState(null);
+    React.useEffect(updateContent)
 
-        this.state = { article: null };
-    }
-
-    componentDidMount() {
-        this.updateContent();
-    }
-
-    componentDidUpdate() {
-        this.updateContent();
-    }
-
-    updateContent() {
-        if (this.props.articleID && (!this.state.article || this.state.article._id !== this.props.articleID)) {
+    function updateContent() {
+        if (articleID && (!article || article._id !== props.articleID)) {
             (
                 async () => {
                     try {
-                        this.setState({ article: await this.updateArticle() })
+                        setArticle(await updateArticle());
                     } catch (e) {
                         console.log(e);
                     }
@@ -32,19 +22,19 @@ class ItemView extends React.Component {
         }
     }
 
-    updateArticle = async () => {//change article being viewed
-        return await (await axios.get(`${config.API}/articles/${this.props.articleID}`)).data
+    let updateArticle = async () => {//change article being viewed
+        return await (await axios.get(`${config.API}/articles/${props.articleID}`)).data
     }
 
-    updateID = (id) => {
-        this.setState({ articleID: id })
+    let updateID = (id) => {
+        setArticleID(id);
     }
 
-    Description = () =>{
-        if(this.state.article?.description){
-            let options = {allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),allowedAttributes: {a:['href', 'name', 'target'],img:['src','title','alt']}};
-            let clean = sanitizeHtml(this.state.article.description,options);
-            return(<div dangerouslySetInnerHTML={{__html:clean}}></div>);
+    let Description = () => {
+        if (article?.description) {
+            let options = { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']), allowedAttributes: { a: ['href', 'name', 'target'], img: ['src', 'title', 'alt'] } };
+            let clean = sanitizeHtml(article.description, options);
+            return (<div dangerouslySetInnerHTML={{ __html: clean }}></div>);
         } else {
             return (
                 <p>Loading...</p>
@@ -52,16 +42,14 @@ class ItemView extends React.Component {
         }
     }
 
-    render = () => {
-        return (
-            <div>
-                <h1>
-                    {this.state.article?.title || "Loading..."}
-                </h1>
-                <this.Description/>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h1>
+                {article?.title || "Loading..."}
+            </h1>
+            <Description />
+        </div>
+    )
 }
 
 export default ItemView;
