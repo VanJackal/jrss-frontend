@@ -6,23 +6,21 @@ import AddFeedButton from "./AddFeedButton";
 import RemoveFeedButton from "./RemoveFeedButton";
 import config from './config.json';
 
-class TopBar extends React.Component {
+function TopBar(props) {
 
-    refreshFeed = async () => {
-        await axios.post(`${config.API}/feeds/${this.props.feedid}`,{url:"http://node1.h.njackal.com/feed"})
+    let refreshFeed = async () => {
+        await axios.post(`${config.API}/feeds/${props.feedid}`, { url: "http://node1.h.njackal.com/feed" })
     }
 
-    render() {
-        return (
-            <div style={{ height: "3em" ,width : '100%'}}>
-                <Toolbar variant="dense">
-                    <IconButton size="small" onClick={()=>{this.refreshFeed()}}><Refresh /></IconButton>
-                    <AddFeedButton/>
-                    <RemoveFeedButton feedid={this.props.feedid}/>
-                </Toolbar>
-            </div>
-        )
-    }
+    return (
+        <div style={{ height: "3em", width: '100%' }}>
+            <Toolbar variant="dense">
+                <IconButton size="small" onClick={() => { refreshFeed() }}><Refresh /></IconButton>
+                <AddFeedButton />
+                <RemoveFeedButton feedid={props.feedid} />
+            </Toolbar>
+        </div>
+    )
 }
 
 export default TopBar;
