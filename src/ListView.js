@@ -10,7 +10,7 @@ function updateRead(article, readState) {
 
 function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
-    React.useEffect(updateContent,[props.selected,props.feedid])
+    React.useEffect(()=>{updateContent()},[props.selected,props.feedid])
 
     async function updateContent() {
         try {
