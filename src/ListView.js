@@ -32,7 +32,6 @@ function ListView(props) {
             </TableBody>
             )//TODO change the loading to replace the table instead of the the table body
         } else {
-            console.log(rowData);
             return (
                 <TableBody>
                     {
