@@ -3,64 +3,51 @@ import axios from "axios";
 import React from "react";
 import config from './config.json';
 
-class FeedsView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { rowData: null }
-    }
+function FeedsView(props) {
+    const [rowData, setRowData] = React.useState(null);
+    React.useEffect(updateContent);
 
-    componentDidMount() {
-        this.updateContent();
-    }
-
-    componentDidUpdate() {//I think this is a inefficient way of doing this but it works for now
-        this.updateContent();//TODO Improve improve this so the entire list isnt reloaded
-    }
-
-    updateContent() {
-        if (!this.state.data) {
-            (
-                async () => {
-                    try {
-                        this.setState({ rowData: await this.getData() })
-                    } catch (e) {
-                        console.log(e);
-                    }
-                }
-            )();
+    async function updateContent() {
+        try {
+            setRowData(await getData());
+        } catch (e) {
+            console.log(e);
         }
     }
 
-    getData = async () => {
+    let getData = async () => {
         return await (await axios.get(`${config.API}/feeds`)).data
     }
 
-    Body = () => {
-        if (!this.state.rowData) {
-            return (<TableBody>
+    let Body = () => {
+        if (!rowData) {
+            return (
+            <TableBody>
                 <TableRow><TableCell>Loading...</TableCell></TableRow>
-            </TableBody>)//TODO change the loading to replace the table instead of the the table body
+            </TableBody>
+            )//TODO change the loading to replace the table instead of the the table body
         } else {
             return (
                 <TableBody>
                     {
-                        this.state.rowData.map((item) => {
+                        rowData.map((item) => {
                             let selState = false;
-                            if(this.props.selected === item._id){//check if the cell is selected (read it if it is)
+                            if (props.selected === item._id) {//check if the cell is selected (read it if it is)
                                 selState = true;
                             }
-                            return(
-                            <TableRow selected={selState} key={item._id}>
-                                <TableCell onClick={()=>{this.props.clickFunc(item._id)}}>{item.title || "Loading..."}</TableCell>
-                            </TableRow>
-                        )})
+                            return (
+                                <TableRow selected={selState} key={item._id}>
+                                    <TableCell onClick={() => { props.clickFunc(item._id) }}>{item.title || "Loading..."}</TableCell>
+                                </TableRow>
+                            )
+                        })
                     }
                 </TableBody>
             )
         }
     }
 
-    Header = () => {
+    let Header = () => {
         return (
             <TableHead>
                 <TableRow>
@@ -70,14 +57,12 @@ class FeedsView extends React.Component {
         )
     }
 
-    render = () => {
-        return (
-            <Table size="small">
-                <this.Header />
-                <this.Body />
-            </Table>
-        )
-    }
+    return (
+        <Table size="small">
+            <Header />
+            <Body />
+        </Table>
+    )
 }
 
 export default FeedsView;

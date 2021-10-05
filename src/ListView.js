@@ -26,10 +26,13 @@ function ListView(props) {
 
     let Body = () => {
         if (!rowData) {
-            return (<TableBody>
+            return (
+            <TableBody>
                 <TableRow><TableCell>Loading...</TableCell></TableRow>
-            </TableBody>)//TODO change the loading to replace the table instead of the the table body
+            </TableBody>
+            )//TODO change the loading to replace the table instead of the the table body
         } else {
+            console.log(rowData);
             return (
                 <TableBody>
                     {
