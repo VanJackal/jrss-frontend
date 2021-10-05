@@ -5,7 +5,7 @@ import config from './config.json';
 
 function FeedsView(props) {
     const [rowData, setRowData] = React.useState(null);
-    React.useEffect(updateContent);
+    React.useEffect(updateContent,[props.selected]);
 
     async function updateContent() {
         try {

@@ -5,7 +5,7 @@ import config from './config.json';
 
 function ItemView(props) {
     const [article, setArticle] = React.useState(null);
-    React.useEffect(updateContent)
+    React.useEffect(updateContent,[props.articleID])
 
     function updateContent() {
         if (!article || article._id !== props.articleID) {
