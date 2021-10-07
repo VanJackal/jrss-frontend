@@ -3,28 +3,29 @@ import axios from "axios";
 import React from "react";
 import config from './config.json';
 
+let getData = async () => {
+    return await (await axios.get(`${config.API}/feeds`)).data
+}
+
 function FeedsView(props) {
     const [rowData, setRowData] = React.useState(null);
-    React.useEffect(()=>{updateContent()},[props.selected]);
-
-    async function updateContent() {
-        try {
-            setRowData(await getData());
-        } catch (e) {
-            console.log(e);
+    React.useEffect(() => {
+        let updateData = async () => {
+            try {
+                setRowData(await getData());
+            } catch (e) {
+                console.log(e);
+            }
         }
-    }
-
-    let getData = async () => {
-        return await (await axios.get(`${config.API}/feeds`)).data
-    }
+        updateData()
+    }, [props.selected]);
 
     let Body = () => {
         if (!rowData) {
             return (
-            <TableBody>
-                <TableRow><TableCell>Loading...</TableCell></TableRow>
-            </TableBody>
+                <TableBody>
+                    <TableRow><TableCell>Loading...</TableCell></TableRow>
+                </TableBody>
             )//TODO change the loading to replace the table instead of the the table body
         } else {
             return (

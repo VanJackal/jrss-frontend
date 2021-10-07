@@ -12,7 +12,6 @@ const styles = {
 function App(props) {
   const [articleID, setArticleID] = React.useState(null);
   const [feedID, setFeedID] = React.useState(null);
-  const [selected, setSelected] = React.useState([]);
 
   let AppView = () => {
     return (

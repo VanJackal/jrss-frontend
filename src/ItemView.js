@@ -3,27 +3,24 @@ import axios from "axios";
 import sanitizeHtml from "sanitize-html";
 import config from './config.json';
 
+let updateArticle = async (articleID) => {//change article being viewed
+    return await (await axios.get(`${config.API}/articles/${articleID}`)).data
+}
+
 function ItemView(props) {
     const [article, setArticle] = React.useState(null);
-    React.useEffect(()=>{updateContent()},[props.articleID])
-
-    function updateContent() {
-        if (!article || article._id !== props.articleID) {
-            (
-                async () => {
-                    try {
-                        setArticle(await updateArticle());
-                    } catch (e) {
-                        console.log(e);
-                    }
+    React.useEffect(() => {
+        async function updateContent() {
+            if (!article || article._id !== props.articleID) {
+                try {
+                    setArticle(await updateArticle(props.articleID));
+                } catch (e) {
+                    console.log(e);
                 }
-            )();
+            }
         }
-    }
-
-    let updateArticle = async () => {//change article being viewed
-        return await (await axios.get(`${config.API}/articles/${props.articleID}`)).data
-    }
+        updateContent()
+    }, [props.articleID, article])
 
     let Description = () => {
         if (article?.description) {

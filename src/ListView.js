@@ -8,28 +8,30 @@ function updateRead(article, readState) {
     axios.put(`${config.API}/articles/${article._id}`, { read: readState });
 }
 
+let getData = async (feedid) => {
+    return await (await axios.get(`${config.API}/feeds/${feedid}/articles`)).data
+}
+
 function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
-    React.useEffect(()=>{updateContent()},[props.selected,props.feedid])
-
-    async function updateContent() {
-        try {
-            setRowData(await getData())
-        } catch (e) {
-            console.log(e);
+    React.useEffect(() => {
+        async function updateContent() {
+            try {
+                setRowData(await getData(props.feedid))
+            } catch (e) {
+                console.log(e);
+            }
         }
-    }
 
-    let getData = async () => {
-        return await (await axios.get(`${config.API}/feeds/${props.feedid}/articles`)).data
-    }
+        updateContent()
+    }, [props.selected, props.feedid])
 
     let Body = () => {
         if (!rowData) {
             return (
-            <TableBody>
-                <TableRow><TableCell>Loading...</TableCell></TableRow>
-            </TableBody>
+                <TableBody>
+                    <TableRow><TableCell>Loading...</TableCell></TableRow>
+                </TableBody>
             )//TODO change the loading to replace the table instead of the the table body
         } else {
             return (
