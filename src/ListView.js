@@ -5,11 +5,24 @@ import React from "react";
 import config from './config.json';
 
 function updateRead(article, readState) {
+    article.read = true;
     axios.put(`${config.API}/articles/${article._id}`, { read: readState });
 }
 
 let getData = async (feedid) => {
     return await (await axios.get(`${config.API}/feeds/${feedid}/articles`)).data
+}
+
+let Header = () => {
+    return (
+        <TableHead>
+            <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell>Read</TableCell>
+                <TableCell>PubDate</TableCell>
+            </TableRow>
+        </TableHead>
+    )
 }
 
 function ListView(props) {
@@ -56,18 +69,6 @@ function ListView(props) {
                 </TableBody>
             )
         }
-    }
-
-    let Header = () => {
-        return (
-            <TableHead>
-                <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Read</TableCell>
-                    <TableCell>PubDate</TableCell>
-                </TableRow>
-            </TableHead>
-        )
     }
 
     return (
