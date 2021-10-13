@@ -25,23 +25,34 @@ let Header = () => {
     )
 }
 
-const ListItem = React.memo(({ item, articleID, clickFunc}) => {
-    console.log(item)
+const ListItem = React.memo(({ item, articleID, clickFunc }) => {
+    const [read, setRead] = React.useState(item.read);
+
     let selState = false;
     if (articleID === item._id) {//check if the cell is selected (read it if it is)
         selState = true;
-        updateRead(item, true);
+        if (!read) {
+            item.read=true;
+            setRead(true);
+            updateRead(item, true);
+        }
     }
-    let rowStyle = { 'fontWeight': item.read ? 'normal' : 'bold' };
+    let rowStyle = { 'fontWeight': read ? 'normal' : 'bold' };
+
+    let readClick = () => {
+        updateRead(item, !read);
+        setRead(!read);
+    }
+
     return (
         <TableRow style={rowStyle} selected={selState} key={item._id}>
             <TableCell onClick={() => clickFunc(item._id)}>{item.title}</TableCell>
-            <TableCell><FiberManualRecordIcon onClick={() => updateRead(item, !item.read)} color={item.read ? 'action' : 'primary'} fontSize='small' /></TableCell>
+            <TableCell><FiberManualRecordIcon onClick={readClick} color={read ? 'action' : 'primary'} fontSize='small' /></TableCell>
             <TableCell>{item.pubDate}</TableCell>
         </TableRow>
     )
-},(prev, next) => {
-    return prev.item.read == next.read && prev.articleID == next.articleID;
+}, (prev, next) => {
+    return prev.item.read === next.read && prev.articleID === next.articleID;
 })
 
 function ListView(props) {
@@ -56,13 +67,13 @@ function ListView(props) {
         }
 
         updateContent()
-    }, [props.feedid])
+    }, [props.articleID, props.feedid])
 
     let Body = () => {
         if (!rowData) {
             return (
                 <TableBody>
-                    <TableRow><TableCell>Loading...</TableCell></TableRow>
+                    <TableRow key={1}><TableCell>Loading...</TableCell></TableRow>
                 </TableBody>
             )//TODO change the loading to replace the table instead of the the table body
         } else {
@@ -70,7 +81,7 @@ function ListView(props) {
                 <TableBody>
                     {
                         rowData.map((item) => {
-                            return (<ListItem item={item} articleID={props.selected} clickFunc={props.clickFunc}/>)
+                            return (<ListItem item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
                         })
                     }
                 </TableBody>
@@ -86,6 +97,6 @@ function ListView(props) {
     )
 }
 
-export default React.memo(ListView,(prev,next) => {
-    return prev.articleID == next.articleID;
+export default React.memo(ListView, (prev, next) => {
+    return prev.selected === next.selected && prev.feedid === next.feedid;
 });
