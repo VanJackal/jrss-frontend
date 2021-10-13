@@ -32,7 +32,7 @@ const ListItem = React.memo(({ item, articleID, clickFunc }) => {
     if (articleID === item._id) {//check if the cell is selected (read it if it is)
         selState = true;
         if (!read) {
-            item.read=true;
+            item.read = true;
             setRead(true);
             updateRead(item, true);
         }
@@ -70,31 +70,27 @@ function ListView(props) {
     }, [props.articleID, props.feedid])
 
     let Body = () => {
-        if (!rowData) {
-            return (
-                <TableBody>
-                    <TableRow key={1}><TableCell>Loading...</TableCell></TableRow>
-                </TableBody>
-            )//TODO change the loading to replace the table instead of the the table body
-        } else {
-            return (
-                <TableBody>
-                    {
-                        rowData.map((item) => {
-                            return (<ListItem item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
-                        })
-                    }
-                </TableBody>
-            )
-        }
+        return (
+            <TableBody>
+                {
+                    rowData.map((item) => {
+                        return (<ListItem key={item._id} item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
+                    })
+                }
+            </TableBody>
+        )
     }
 
-    return (
-        <Table size="small">
-            <Header />
-            <Body />
-        </Table>
-    )
+    if (!rowData) {
+        return (<p>Loading...</p>)
+    } else {
+        return (
+            <Table size="small">
+                <Header />
+                <Body />
+            </Table>
+        )
+    }
 }
 
 export default React.memo(ListView, (prev, next) => {
