@@ -5,7 +5,7 @@ import React from "react";
 import config from './config.json';
 
 function updateRead(article, readState) {
-    article.read = true;
+    article.read = readState;
     axios.put(`${config.API}/articles/${article._id}`, { read: readState });
 }
 
@@ -25,6 +25,25 @@ let Header = () => {
     )
 }
 
+const ListItem = React.memo(({ item, articleID, clickFunc}) => {
+    console.log(item)
+    let selState = false;
+    if (articleID === item._id) {//check if the cell is selected (read it if it is)
+        selState = true;
+        updateRead(item, true);
+    }
+    let rowStyle = { 'fontWeight': item.read ? 'normal' : 'bold' };
+    return (
+        <TableRow style={rowStyle} selected={selState} key={item._id}>
+            <TableCell onClick={() => clickFunc(item._id)}>{item.title}</TableCell>
+            <TableCell><FiberManualRecordIcon onClick={() => updateRead(item, !item.read)} color={item.read ? 'action' : 'primary'} fontSize='small' /></TableCell>
+            <TableCell>{item.pubDate}</TableCell>
+        </TableRow>
+    )
+},(prev, next) => {
+    return prev.item.read == next.read && prev.articleID == next.articleID;
+})
+
 function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
     React.useEffect(() => {
@@ -37,7 +56,7 @@ function ListView(props) {
         }
 
         updateContent()
-    }, [props.selected, props.feedid])
+    }, [props.feedid])
 
     let Body = () => {
         if (!rowData) {
@@ -51,19 +70,7 @@ function ListView(props) {
                 <TableBody>
                     {
                         rowData.map((item) => {
-                            let selState = false;
-                            if (props.selected === item._id) {//check if the cell is selected (read it if it is)
-                                selState = true;
-                                updateRead(item, true);
-                            }
-                            let rowStyle = { 'fontWeight': item.read ? 'normal' : 'bold' };
-                            return (
-                                <TableRow style={rowStyle} selected={selState} key={item._id}>
-                                    <TableCell onClick={() => props.clickFunc(item._id)}>{item.title}</TableCell>
-                                    <TableCell><FiberManualRecordIcon onClick={() => updateRead(item, !item.read)} color={item.read ? 'action' : 'primary'} fontSize='small' /></TableCell>
-                                    <TableCell>{item.pubDate}</TableCell>
-                                </TableRow>
-                            )
+                            return (<ListItem item={item} articleID={props.selected} clickFunc={props.clickFunc}/>)
                         })
                     }
                 </TableBody>
@@ -79,4 +86,6 @@ function ListView(props) {
     )
 }
 
-export default ListView;
+export default React.memo(ListView,(prev,next) => {
+    return prev.articleID == next.articleID;
+});

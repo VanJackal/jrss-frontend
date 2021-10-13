@@ -10,7 +10,6 @@ const styles = {
 };
 
 function App(props) {
-  const [articleID, setArticleID] = React.useState(null);
   const [feedID, setFeedID] = React.useState(null);
 
   let AppView = () => {
@@ -27,10 +26,15 @@ function App(props) {
   }
 
   let FeedView = () => {
+    const [articleID, setArticleID] = React.useState(null);
+
+    const selectArticle = React.useCallback(id => {
+      setArticleID(id)
+    }, [])
     return (
       <Grid container style={{ height: "100%" }} wrap="nowrap" direction="column">
         <Grid item xs={12} style={{ overflowY: "scroll", flexBasis: "40%" }}>
-          <ListView feedid={feedID} selected={articleID} clickFunc={setArticleID} />
+          <ListView feedid={feedID} selected={articleID} clickFunc={selectArticle} />
         </Grid>
         <Grid item xs={12} style={{ overflow: "auto", flexBasis: "60%" }}>
           <ItemView articleID={articleID} />
