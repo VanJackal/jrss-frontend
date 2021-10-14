@@ -11,6 +11,11 @@ const styles = {
 
 function App(props) {
   const [feedID, setFeedID] = React.useState(null);
+  const [dataAge, setDataAge] = React.useState(new Date());
+
+  let updateTime = () => {
+    setDataAge(new Date());
+  }
 
   let AppView = () => {
     return (
@@ -34,7 +39,7 @@ function App(props) {
     return (
       <Grid container style={{ height: "100%" }} wrap="nowrap" direction="column">
         <Grid item xs={12} style={{ overflowY: "scroll", flexBasis: "40%" }}>
-          <ListView feedid={feedID} selected={articleID} clickFunc={selectArticle} />
+          <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle} />
         </Grid>
         <Grid item xs={12} style={{ overflow: "auto", flexBasis: "60%" }}>
           <ItemView articleID={articleID} />
@@ -47,7 +52,7 @@ function App(props) {
     <div style={{ height: '100vh', width: '100vw', overflow: "auto" }}>
       <Grid container direction="column" style={styles.container} wrap="nowrap">
         <Grid item style={{ height: "3em", }}>
-          <TopBar feedid={feedID} />
+          <TopBar updateFunc={updateTime} feedid={feedID} />
         </Grid>
         <Grid item style={{ height: "calc(100% - 3em)" }}>
           <AppView />

@@ -94,5 +94,5 @@ function ListView(props) {
 }
 
 export default React.memo(ListView, (prev, next) => {
-    return prev.selected === next.selected && prev.feedid === next.feedid;
+    return prev.selected === next.selected && prev.feedid === next.feedid && prev.updated === next.updated;
 });

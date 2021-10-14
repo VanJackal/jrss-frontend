@@ -10,6 +10,7 @@ function TopBar(props) {
 
     let refreshFeed = async () => {
         await axios.post(`${config.API}/feeds/${props.feedid}`, { url: "http://node1.h.njackal.com/feed" })
+        props.updateFunc();
     }
 
     return (
