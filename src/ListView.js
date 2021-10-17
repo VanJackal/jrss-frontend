@@ -25,7 +25,7 @@ let Header = () => {
     )
 }
 
-const ListItem = React.memo(({ item, articleID, clickFunc }) => {
+const ListItem = ({ item, articleID, clickFunc }) => {
     const [read, setRead] = React.useState(item.read);
 
     let selState = false;
@@ -51,13 +51,12 @@ const ListItem = React.memo(({ item, articleID, clickFunc }) => {
             <TableCell>{item.pubDate}</TableCell>
         </TableRow>
     )
-}, (prev, next) => {
-    return prev.item.read === next.read && prev.articleID === next.articleID;
-})
+}
 
 function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
     React.useEffect(() => {
+        console.log(props.updated)
         async function updateContent() {
             try {
                 setRowData(await getData(props.feedid))
@@ -67,7 +66,7 @@ function ListView(props) {
         }
 
         updateContent()
-    }, [props.articleID, props.feedid])
+    }, [props.articleID, props.feedid, props.updated])
 
     let Body = () => {
         return (
@@ -93,6 +92,4 @@ function ListView(props) {
     }
 }
 
-export default React.memo(ListView, (prev, next) => {
-    return prev.selected === next.selected && prev.feedid === next.feedid && prev.updated === next.updated;
-});
+export default ListView

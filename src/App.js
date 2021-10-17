@@ -9,7 +9,7 @@ const styles = {
   container: { display: "flex", flexDirection: "column", overflow: "auto", height: "100%", width: "100%" }
 };
 
-let AppView = React.memo(({ feedID, selectFeed, dataAge }) => {
+let AppView = ({ feedID, selectFeed, dataAge }) => {
   return (
     <Grid container direction="row" style={styles.container}>
       <Grid item style={{ width: "20%" }}>
@@ -20,9 +20,7 @@ let AppView = React.memo(({ feedID, selectFeed, dataAge }) => {
       </Grid>
     </Grid>
   )
-}, (prev, next) => {
-  return prev.feedID === next.feedID;
-})
+}
 
 let FeedView = ({feedID, dataAge}) => {
   const [articleID, setArticleID] = React.useState(null);

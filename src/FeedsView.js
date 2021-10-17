@@ -17,7 +17,7 @@ let Header = () => {
     )
 }
 
-const FeedListItem = React.memo(({selected,item,clickFunc}) => {
+const FeedListItem = ({selected,item,clickFunc}) => {
     let selState = false;
     if (selected === item._id) {//check if the cell is selected (read it if it is)
         selState = true;
@@ -27,9 +27,7 @@ const FeedListItem = React.memo(({selected,item,clickFunc}) => {
             <TableCell onClick={() => { clickFunc(item._id) }}>{item.title}</TableCell>
         </TableRow>
     )
-}, (prev,next) => {
-    return prev.selected === next.selected;
-})
+}
 
 function FeedsView(props) {
     const [rowData, setRowData] = React.useState(null);
@@ -42,7 +40,7 @@ function FeedsView(props) {
             }
         }
         updateData()
-    }, []);
+    }, [props.updated]);
 
     let Body = () => {
         return (
@@ -68,6 +66,4 @@ function FeedsView(props) {
     }
 }
 
-export default React.memo(FeedsView,(prev,next) => {
-    return prev.updated === next.updated & prev.selected === next.selected;
-});
+export default FeedsView
