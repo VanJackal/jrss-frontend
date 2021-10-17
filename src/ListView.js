@@ -56,7 +56,6 @@ const ListItem = ({ item, articleID, clickFunc }) => {
 function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
     React.useEffect(() => {
-        console.log(props.updated)
         async function updateContent() {
             try {
                 setRowData(await getData(props.feedid))
