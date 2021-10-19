@@ -21,7 +21,6 @@ function Login() {
             console.log(res.status);
             console.log(res)
             if (res.status === 200) {
-                //this.props.history.push("/");
             }
         });
     }
@@ -37,7 +36,6 @@ function Login() {
                     <TextField inputRef={ref => { user = ref }} style={itemStyle} id="username" label="Username" variant="outlined" />
                     <TextField inputRef={ref => { pass = ref }} style={itemStyle} type="password" id="password" label="Password" variant="outlined" />
                     <Button onClick={handleButton} style={itemStyle} variant="contained">Login</Button>
-                    <a href="/">Test</a>
                 </Box>
             </Paper>
         </Box>
