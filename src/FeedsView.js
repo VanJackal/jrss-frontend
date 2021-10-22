@@ -12,6 +12,7 @@ let Header = () => {
         <TableHead>
             <TableRow>
                 <TableCell>Feed</TableCell>
+                <TableCell></TableCell>
             </TableRow>
         </TableHead>
     )
@@ -25,6 +26,7 @@ const FeedListItem = ({selected,item,clickFunc}) => {
     return (
         <TableRow selected={selState} key={item._id}>
             <TableCell onClick={() => { clickFunc(item._id) }}>{item.title}</TableCell>
+            <TableCell >{item.unread}</TableCell>
         </TableRow>
     )
 }
