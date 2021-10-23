@@ -14,26 +14,15 @@ let Header = () => {
     )
 }
 
-const FeedListItem = ({ selected, item, clickFunc }) => {
-    let selState = false;
-    if (selected === item._id) {//check if the cell is selected (read it if it is)
-        selState = true;
-    }
+const FeedListItem = ({ item }) => {
     return (
-        <TreeItem nodeId={item._id} label={item.title}/>
+        <TreeItem nodeId={item._id} label={item.title} />
     )
-    /*
-    return (
-        <TableRow selected={selState} key={item._id}>
-            <TableCell onClick={() => { clickFunc(item._id) }}>{item.title}</TableCell>
-            <TableCell >{item.unread}</TableCell>
-        </TableRow>
-    )
-    */
 }
 
 function FeedsView(props) {
     const [rowData, setRowData] = React.useState(null);
+    const [expanded, setExpanded] = React.useState([]);
     React.useEffect(() => {
         let updateData = async () => {
             try {
@@ -47,12 +36,14 @@ function FeedsView(props) {
 
     let Body = () => {
         return (
-            <TreeView onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
-                {
-                    rowData.map((item) => {
-                        return (<FeedListItem key={item._id} selected={props.selected} item={item} clickFunc={props.clickFunc} />)
-                    })
-                }
+            <TreeView expanded={expanded} onNodeToggle={(_, expanded) => { setExpanded(expanded) }} onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
+                <TreeItem nodeId={"header"} label="feeds">
+                    {
+                        rowData.map((item) => {
+                            return (<FeedListItem item={item}/>)
+                        })
+                    }
+                </TreeItem>
             </TreeView>
         )
     }
