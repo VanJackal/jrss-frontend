@@ -1,4 +1,4 @@
-import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { TreeView, TreeItem } from "@material-ui/lab";
 import axios from "axios";
 import React from "react";
@@ -16,7 +16,12 @@ let Header = () => {
 
 const FeedListItem = ({ item }) => {
     return (
-        <TreeItem nodeId={item._id} label={item.title} />
+        <TreeItem nodeId={item._id} label={
+            <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                <Typography sx={{flexGrow:1}}>{item.title}</Typography>
+                <Typography variant="caption">{item.unread}</Typography>
+            </Box>
+        } />
     )
 }
 
