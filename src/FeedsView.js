@@ -41,7 +41,7 @@ function FeedsView(props) {
 
     let Body = () => {
         return (
-            <TreeView expanded={expanded} onNodeToggle={(_, expanded) => { setExpanded(expanded) }} onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
+            <TreeView selected={props.selected} expanded={expanded} onNodeToggle={(_, expanded) => { setExpanded(expanded) }} onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
                 <TreeItem nodeId={"header"} label="feeds">
                     {
                         rowData.map((item) => {
