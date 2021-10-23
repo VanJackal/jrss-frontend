@@ -1,4 +1,5 @@
 import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
+import { TreeView, TreeItem } from "@material-ui/lab";
 import axios from "axios";
 import React from "react";
 import config from './config.json';
@@ -9,26 +10,26 @@ let getData = async () => {
 
 let Header = () => {
     return (
-        <TableHead>
-            <TableRow>
-                <TableCell>Feed</TableCell>
-                <TableCell></TableCell>
-            </TableRow>
-        </TableHead>
+        <p>Feeds</p>
     )
 }
 
-const FeedListItem = ({selected,item,clickFunc}) => {
+const FeedListItem = ({ selected, item, clickFunc }) => {
     let selState = false;
     if (selected === item._id) {//check if the cell is selected (read it if it is)
         selState = true;
     }
+    return (
+        <TreeItem nodeId={item._id} label={item.title}/>
+    )
+    /*
     return (
         <TableRow selected={selState} key={item._id}>
             <TableCell onClick={() => { clickFunc(item._id) }}>{item.title}</TableCell>
             <TableCell >{item.unread}</TableCell>
         </TableRow>
     )
+    */
 }
 
 function FeedsView(props) {
@@ -46,13 +47,13 @@ function FeedsView(props) {
 
     let Body = () => {
         return (
-            <TableBody>
+            <TreeView onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
                 {
                     rowData.map((item) => {
-                        return(<FeedListItem key={item._id} selected={props.selected} item={item} clickFunc={props.clickFunc}/>)
+                        return (<FeedListItem key={item._id} selected={props.selected} item={item} clickFunc={props.clickFunc} />)
                     })
                 }
-            </TableBody>
+            </TreeView>
         )
     }
 
@@ -60,10 +61,10 @@ function FeedsView(props) {
         return (<p>Loading...</p>)
     } else {
         return (
-            <Table size="small">
+            <>
                 <Header />
                 <Body />
-            </Table>
+            </>
         )
     }
 }
