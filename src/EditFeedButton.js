@@ -12,7 +12,18 @@ import config from './config.json';
 export default function EditFeedButton(props) {
   const [open, setOpen] = React.useState(false);
   React.useEffect(()=>{
-    getFeedInfo();
+    if(!props.feedid){
+      return;
+    }
+    axios.get(`${config.API}/feeds/${props.feedid}`).then(res => {
+      setRecievedInfo({
+        url: res.data.link,
+        title: res.data.title,
+        feedid: res.data.feedid,
+        description: res.data.description,
+        folder: res.data.folder,
+      });
+    });
   },[props.feedid])
 
   let formInput = {};
@@ -43,21 +54,6 @@ export default function EditFeedButton(props) {
 
   let editFeed = async (feed) => {
     await axios.put(`${config.API}/feeds/${props.feedid}`, feed);
-  }
-
-  let getFeedInfo = async () => {//TODO update this
-    if(!props.feedid){
-      return;
-    }
-    axios.get(`${config.API}/feeds/${props.feedid}`).then(res => {
-      setRecievedInfo({
-        url: res.data.link,
-        title: res.data.title,
-        feedid: res.data.feedid,
-        description: res.data.description,
-        folder: res.data.folder,
-      });
-    });
   }
 
   let GetDialogContent = () => {
