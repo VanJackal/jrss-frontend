@@ -10,7 +10,7 @@ import config from './config.json';
 function TopBar(props) {
 
     let refreshFeed = async () => {
-        await axios.post(`${config.API}/feeds/${props.feedid}`, { url: "http://node1.h.njackal.com/feed" })
+        await axios.post(`${config.API}/util/feeds/refresh`)
         props.updateFunc();
     }
 
