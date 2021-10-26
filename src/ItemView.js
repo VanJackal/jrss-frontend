@@ -34,11 +34,30 @@ function ItemView(props) {
         }
     }
 
+    let Enclosure = () => {
+        if(!article?.enclosure){
+            return <></> 
+        } else {
+            switch(article.enclosure.type.split('/')[0]){
+                case "audio":
+                    return(
+                        <audio controls style={{width:"80%"}}>
+                            <source src={article.enclosure.url} type={article.enclosure.type}/>
+                        </audio>
+                    )
+                default:
+                    console.log(article.enclosure.type);
+                    return <></>
+            }
+        }
+    }
+
     return (
         <div>
             <h1>
                 {article ? (<a href={article?.link}>{article?.title}</a>) : "Loading..."}
             </h1>
+            <Enclosure />
             <Description />
         </div>
     )
