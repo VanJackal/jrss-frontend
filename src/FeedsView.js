@@ -40,7 +40,7 @@ function FolderFeeds(props) {
 }
 
 function FeedsView(props) {
-    const [rowData, setRowData] = React.useState(null);
+    const [rowData, setRowData] = React.useState([]);
     const [expanded, setExpanded] = React.useState([]);
     React.useEffect(() => {
         let updateData = async () => {
