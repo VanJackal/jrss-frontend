@@ -12,7 +12,7 @@ const styles = {
 let AppView = ({ feedID, selectFeed, dataAge }) => {
   return (
     <Grid container direction="row" style={styles.container}>
-      <Grid item style={{ width: "20%" }}>
+      <Grid item style={{ width: "20%", height:"100%", overflowY:"auto" }}>
         <FeedsView updated={dataAge} clickFunc={selectFeed} selected={feedID} />
       </Grid>
       <Grid item style={{ width: "80%", height: "100%" }}>
