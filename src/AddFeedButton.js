@@ -31,6 +31,7 @@ export default function AddFeedButton() {
         title: formInput.title.value,
         feedid: formInput.id.value,
         description: formInput.desc.value,
+        folder: formInput.folder.value,
       }
       addFeed(feed);
       handleClose();
@@ -86,6 +87,14 @@ export default function AddFeedButton() {
             margin="dense"
             id="name"
             label="FeedID"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            inputRef={ref => { formInput.folder = ref }}
+            margin="dense"
+            id="name"
+            label="Folder"
             fullWidth
           />
           <TextField

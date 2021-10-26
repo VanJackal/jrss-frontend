@@ -99,6 +99,7 @@ export default function EditFeedButton(props) {
             margin="dense"
             id="name"
             label="Folder"
+            defaultValue={infoPresets?.folder || "Loading"}
             fullWidth
           />
           <TextField
