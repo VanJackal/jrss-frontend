@@ -17,11 +17,25 @@ let Header = () => {
 const FeedListItem = ({ item }) => {
     return (
         <TreeItem nodeId={item._id} label={
-            <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                <Typography sx={{flexGrow:1}}>{item.title}</Typography>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <Typography sx={{ flexGrow: 1 }}>{item.title}</Typography>
                 <Typography variant="caption">{item.unread}</Typography>
             </Box>
         } />
+    )
+}
+
+function FolderFeeds(props) {
+    return (
+        <TreeItem nodeId={props.folder} label={props.folder}>
+            {
+                props.feeds.map((item) => {
+                    return (
+                        <FeedListItem item={item} />
+                    )
+                })
+            }
+        </TreeItem>
     )
 }
 
@@ -42,13 +56,13 @@ function FeedsView(props) {
     let Body = () => {
         return (
             <TreeView selected={props.selected} expanded={expanded} onNodeToggle={(_, expanded) => { setExpanded(expanded) }} onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
-                <TreeItem nodeId={"header"} label="feeds">
-                    {
-                        rowData.map((item) => {
-                            return (<FeedListItem item={item}/>)
-                        })
-                    }
-                </TreeItem>
+                {
+                    rowData.map((folder) => {
+                        return (
+                            <FolderFeeds folder={folder.folder} feeds={folder.feeds} />
+                        )
+                    })
+                }
             </TreeView>
         )
     }
