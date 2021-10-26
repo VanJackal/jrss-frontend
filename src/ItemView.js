@@ -40,7 +40,7 @@ function ItemView(props) {
         } else {
             let type = article.enclosure.type
             if(!type){
-                let fileExt = article.enclosure.url.split(/[\.]/)
+                let fileExt = article.enclosure.url.split(/[.]/)
                 fileExt = fileExt[fileExt.length - 1]
                 switch(fileExt){
                     case "mp3":
