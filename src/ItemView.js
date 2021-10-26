@@ -37,7 +37,7 @@ function ItemView(props) {
     return (
         <div>
             <h1>
-                {article?.title || "Loading..."}
+                {article ? (<a href={article?.link}>{article?.title}</a>) : "Loading..."}
             </h1>
             <Description />
         </div>
