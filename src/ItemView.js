@@ -38,11 +38,24 @@ function ItemView(props) {
         if(!article?.enclosure){
             return <></> 
         } else {
-            switch(article.enclosure.type.split('/')[0]){
+            let type = article.enclosure.type
+            if(!type){
+                let fileExt = article.enclosure.url.split(/[\.]/)
+                fileExt = fileExt[fileExt.length - 1]
+                switch(fileExt){
+                    case "mp3":
+                        type = "audio/mpeg"
+                        break;
+                    default:
+                        type = "audio/mpeg"
+                }
+            }
+
+            switch(type.split("/")[0]){
                 case "audio":
                     return(
                         <audio controls style={{width:"80%"}}>
-                            <source src={article.enclosure.url} type={article.enclosure.type}/>
+                            <source src={article.enclosure.url} type={type}/>
                         </audio>
                     )
                 default:
