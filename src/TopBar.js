@@ -3,6 +3,7 @@ import axios from "axios";
 import { Toolbar, IconButton } from "@material-ui/core"
 import { Refresh } from "@material-ui/icons"
 import AddFeedButton from "./AddFeedButton";
+import EditFeedButton from "./EditFeedButton";
 import RemoveFeedButton from "./RemoveFeedButton";
 import config from './config.json';
 
@@ -18,6 +19,7 @@ function TopBar(props) {
             <Toolbar variant="dense">
                 <IconButton size="small" onClick={() => { refreshFeed() }}><Refresh /></IconButton>
                 <AddFeedButton />
+                <EditFeedButton feedid={props.feedid} />
                 <RemoveFeedButton feedid={props.feedid} />
             </Toolbar>
         </div>
