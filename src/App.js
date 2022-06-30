@@ -41,6 +41,7 @@ let FeedView = ({feedID, dataAge}) => {
 function App(props) {
     const [feedID, setFeedID] = React.useState(null);
     const selectFeed = React.useCallback(id => {
+        console.debug(`Selected new feed:`,id)
         setFeedID(id);
     }, [])
     const [dataAge, setDataAge] = React.useState(new Date());
@@ -53,11 +54,11 @@ function App(props) {
     return (
         <div className="wrapper">
             <div className="grid header">
-                Test
+                <TopBar feedid={feedID} updateFunc={updateTime}/>
             </div>
             <div className="grid content">
                 <div className="grid feeds">
-
+                    <FeedsView updated={dataAge} clickFunc={selectFeed} selected={feedID}/>
                 </div>
                 <div className="grid feed">
                     <div className="grid articles">

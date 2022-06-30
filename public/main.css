@@ -61,3 +61,20 @@ body {
 .articles {
     border-bottom: var(--border);
 }
+
+table.feeds {
+    width:100%;
+    border-style:none;
+    border-collapse: collapse;
+}
+
+.unread {
+    font-size:0.7em;
+    color: var(--persian-red)
+}
+.feeds-item:hover {
+    background-color: var(--black-olive);
+}
+.selected {
+    background-color: var(--black-olive);
+}

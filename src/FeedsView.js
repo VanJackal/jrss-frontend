@@ -1,5 +1,3 @@
-import { Box, Typography } from "@material-ui/core";
-import { TreeView, TreeItem } from "@material-ui/lab";
 import axios from "axios";
 import React from "react";
 import config from './config.json';
@@ -10,32 +8,24 @@ let getData = async () => {
 
 let Header = () => {
     return (
-        <p>Feeds</p>
+        <thead>
+        <tr>
+            <th colSpan={2}>Feeds</th>
+        </tr>
+        </thead>
     )
 }
 
-const FeedListItem = ({ item }) => {
+const FeedListItem = ({selected,item, onClick}) => {
+    let classes = "feeds-item"
+    classes += selected===item._id ? " selected" : ""
     return (
-        <TreeItem nodeId={item._id} label={
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <Typography sx={{ flexGrow: 1 }}>{item.title}</Typography>
-                <Typography variant="caption">{item.unread}</Typography>
-            </Box>
-        } />
-    )
-}
-
-function FolderFeeds(props) {
-    return (
-        <TreeItem nodeId={props.folder} label={props.folder}>
-            {
-                props.feeds.map((item) => {
-                    return (
-                        <FeedListItem item={item} />
-                    )
-                })
-            }
-        </TreeItem>
+        <tr className={classes} onClick={() => {
+            onClick(item._id);
+        }}>
+            <td className="feed-name">{item.title}</td>
+            <td className="unread">{item.unread}</td>
+        </tr>
     )
 }
 
@@ -54,16 +44,15 @@ function FeedsView(props) {
     }, [props.updated]);
 
     let Body = () => {
+        console.debug("New rowData:",rowData)
         return (
-            <TreeView selected={props.selected} expanded={expanded} onNodeToggle={(_, expanded) => { setExpanded(expanded) }} onNodeSelect={(_, selected) => { props.clickFunc(selected) }}>
-                {
-                    rowData.map((folder) => {
-                        return (
-                            <FolderFeeds folder={folder.folder} feeds={folder.feeds} />
-                        )
-                    })
-                }
-            </TreeView>
+            <tbody>
+            {
+                rowData.map((row) => {
+                    return (<FeedListItem item={row} key={row._id} onClick={props.clickFunc} selected={props.selected}/>)
+                })
+            }
+            </tbody>
         )
     }
 
@@ -71,10 +60,10 @@ function FeedsView(props) {
         return (<p>Loading...</p>)
     } else {
         return (
-            <>
+            <table className="feeds">
                 <Header />
                 <Body />
-            </>
+            </table>
         )
     }
 }
