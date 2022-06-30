@@ -1,19 +1,29 @@
 :root {
-    --background-color: darkgrey;
-    --border: #696969 2px solid;
+    /* COLORS */
+    --rich-black-fogra-39: #0a0a0aff;
+    --eerie-black: #1a181aff;
+    --davys-grey: #505050ff;
+    --persian-red: #d1342fff;
+    --black-olive: #434038ff;
+    --dutch-white: #eee3c1ff;
+
+    --background-color: var(--eerie-black);
+    --border: var(--davys-grey) 2px solid;
 }
 
 .header {
-    flex: 0 0 3em;
+    flex: 0 0 auto;
 
     border-bottom: var(--border);
 }
+
 body {
     background-color: var(--background-color);
+    color: var(--dutch-white);
 }
 
 .wrapper {
-    height:100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -21,7 +31,7 @@ body {
 .grid.content {
     display: grid;
     flex: 1 1 auto;
-    grid-template-columns: 1fr 4fr ;
+    grid-template-columns: 1fr 4fr;
 }
 
 .grid.feeds {
@@ -36,3 +46,18 @@ body {
     grid-row: 1/2;
 }
 
+.feed {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.grid.articles {
+    grid-row: 1/2;
+}
+.grid.article {
+    grid-row: 2/3;
+}
+
+.articles {
+    border-bottom: var(--border);
+}
