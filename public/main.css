@@ -1,0 +1,38 @@
+:root {
+    --background-color: darkgrey;
+    --border: #696969 2px solid;
+}
+
+.header {
+    flex: 0 0 3em;
+
+    border-bottom: var(--border);
+}
+body {
+    background-color: var(--background-color);
+}
+
+.wrapper {
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid.content {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: 1fr 4fr ;
+}
+
+.grid.feeds {
+    grid-column: 1/2;
+    grid-row: 1/2;
+
+    border-right: var(--border);
+}
+
+.grid.feed {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
