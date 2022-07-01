@@ -6,7 +6,7 @@ import config from './config.json';
 
 function updateRead(article, readState) {
     article.read = readState;
-    axios.put(`${config.API}/articles/${article._id}`, { read: readState });
+    axios.patch(`${config.API}/articles/${article._id}`, { read: readState });
 }
 
 let getData = async (feedid) => {
@@ -15,13 +15,13 @@ let getData = async (feedid) => {
 
 let Header = () => {
     return (
-        <TableHead>
-            <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell>Read</TableCell>
-                <TableCell>PubDate</TableCell>
-            </TableRow>
-        </TableHead>
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Read</td>
+                <td>PubDate</td>
+            </tr>
+        </thead>
     )
 }
 
@@ -37,7 +37,6 @@ const ListItem = ({ item, articleID, clickFunc }) => {
             updateRead(item, true);
         }
     }
-    let rowStyle = { 'fontWeight': read ? 'normal' : 'bold' };
 
     let readClick = () => {
         updateRead(item, !read);
@@ -45,11 +44,11 @@ const ListItem = ({ item, articleID, clickFunc }) => {
     }
 
     return (
-        <TableRow style={rowStyle} selected={selState} key={item._id}>
-            <TableCell onClick={() => clickFunc(item._id)}>{item.title}</TableCell>
-            <TableCell><FiberManualRecordIcon onClick={readClick} color={read ? 'action' : 'primary'} fontSize='small' /></TableCell>
-            <TableCell>{item.pubDate}</TableCell>
-        </TableRow>
+        <tr selected={selState} key={item._id}>
+            <td onClick={() => clickFunc(item._id)}>{item.title}</td>
+            <td><FiberManualRecordIcon onClick={readClick} color={read ? 'action' : 'primary'} fontSize='small' /></td>
+            <td>{item.pubDate}</td>
+        </tr>
     )
 }
 
@@ -69,13 +68,13 @@ function ListView(props) {
 
     let Body = () => {
         return (
-            <TableBody>
+            <tbody>
                 {
                     rowData.map((item) => {
                         return (<ListItem key={item._id} item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
                     })
                 }
-            </TableBody>
+            </tbody>
         )
     }
 
@@ -83,10 +82,10 @@ function ListView(props) {
         return (<p>Loading...</p>)
     } else {
         return (
-            <Table size="small">
+            <table>
                 <Header />
                 <Body />
-            </Table>
+            </table>
         )
     }
 }

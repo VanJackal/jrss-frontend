@@ -28,7 +28,6 @@ let FeedView = ({feedID, dataAge}) => {
     return (
         <Grid container style={{height: "100%"}} wrap="nowrap" direction="column">
             <Grid item xs={12} style={{overflowY: "scroll", flexBasis: "40%"}}>
-                <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle}/>
             </Grid>
             <Grid item xs={12} style={{overflow: "auto", flexBasis: "60%"}}>
                 <ItemView articleID={articleID}/>
@@ -44,6 +43,12 @@ function App(props) {
         console.debug(`Selected new feed:`,id)
         setFeedID(id);
     }, [])
+
+    const [articleID, setArticleID] = React.useState(null);
+    const selectArticle = React.useCallback(id => {
+        setArticleID(id)
+    }, [])
+
     const [dataAge, setDataAge] = React.useState(new Date());
 
     let updateTime = () => {
@@ -62,7 +67,7 @@ function App(props) {
                 </div>
                 <div className="grid feed">
                     <div className="grid articles">
-
+                        <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle}/>
                     </div>
                     <div className="grid article">
 
