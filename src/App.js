@@ -30,7 +30,6 @@ let FeedView = ({feedID, dataAge}) => {
             <Grid item xs={12} style={{overflowY: "scroll", flexBasis: "40%"}}>
             </Grid>
             <Grid item xs={12} style={{overflow: "auto", flexBasis: "60%"}}>
-                <ItemView articleID={articleID}/>
             </Grid>
         </Grid>
     )
@@ -70,7 +69,7 @@ function App(props) {
                         <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle}/>
                     </div>
                     <div className="grid article">
-
+                        <ItemView articleID={articleID}/>
                     </div>
                 </div>
             </div>
