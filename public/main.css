@@ -62,13 +62,13 @@ body {
     border-bottom: var(--border);
 }
 
-table.feeds {
+table {
     width:100%;
     border-style:none;
     border-collapse: collapse;
 }
 
-.unread {
+.feeds .unread {
     font-size:0.7em;
     color: var(--persian-red)
 }
@@ -77,4 +77,27 @@ table.feeds {
 }
 .selected {
     background-color: var(--black-olive);
+}
+
+.articles.row:hover {
+    background-color: var(--black-olive);
+}
+.articles.row {
+    height: 2em;
+}
+.articles.title {
+    width:50%;
+}
+
+.articles.unread {
+    font-weight: bold;
+}
+
+.articles.unread .readIndicator{
+    color: var(--persian-red)
+}
+
+.readIndicator {
+    user-select: none;
+    color: var(--rich-black-fogra-39)
 }

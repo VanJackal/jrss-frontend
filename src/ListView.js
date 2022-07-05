@@ -1,11 +1,10 @@
-import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import axios from "axios";
 import React from "react";
 import config from './config.json';
 
 function updateRead(article, readState) {
     article.read = readState;
+    console.debug("updating readstate for: ", article)
     axios.patch(`${config.API}/articles/${article._id}`, { read: readState });
 }
 
@@ -22,6 +21,12 @@ let Header = () => {
                 <td>PubDate</td>
             </tr>
         </thead>
+    )
+}
+
+let ReadIndicator = () => {
+    return (
+        <div>&bull;</div>
     )
 }
 
@@ -44,10 +49,10 @@ const ListItem = ({ item, articleID, clickFunc }) => {
     }
 
     return (
-        <tr selected={selState} key={item._id}>
-            <td onClick={() => clickFunc(item._id)}>{item.title}</td>
-            <td><FiberManualRecordIcon onClick={readClick} color={read ? 'action' : 'primary'} fontSize='small' /></td>
-            <td>{item.pubDate}</td>
+        <tr className={"articles row" + (selState ? " selected" : "") + (read? "" : " unread")} key={item._id}>
+            <td onClick={() => clickFunc(item._id)} className="articles title">{item.title}</td>
+            <td onClick={readClick} className="articles readIndicator"><ReadIndicator read={read} /></td>
+            <td className={"articles pubDate"}>{item.pubDate}</td>
         </tr>
     )
 }
@@ -82,7 +87,7 @@ function ListView(props) {
         return (<p>Loading...</p>)
     } else {
         return (
-            <table>
+            <table className="articles">
                 <Header />
                 <Body />
             </table>
