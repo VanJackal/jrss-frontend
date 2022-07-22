@@ -61,10 +61,12 @@ function ListView(props) {
     const [rowData, setRowData] = React.useState(null);
     React.useEffect(() => {
         async function updateContent() {
-            try {
-                setRowData(await getData(props.feedid))
-            } catch (e) {
-                console.log(e);
+            if (props.feedid != null){
+                try {
+                    setRowData(await getData(props.feedid))
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 

@@ -1,8 +1,14 @@
 import React from "react"
+import axios from "axios"
 import ListView from "./ListView"
 import ItemView from "./ItemView"
 import FeedsView from "./FeedsView"
 import TopBar from "./TopBar"
+import config from "./config.json"
+
+let getFeeds = async () => {
+    return (await axios.get(`${config.API}/feeds`)).data
+}
 
 function App(props) {
     const [feedID, setFeedID] = React.useState(null);
@@ -21,7 +27,17 @@ function App(props) {
     let updateTime = () => {
         setDataAge(new Date());
     }
+    const [feeds, setFeeds] = React.useState(null);
+    React.useEffect(() => {
+        getFeeds().then((feeds) => {setFeeds(feeds)})
+    }, [dataAge])
 
+    const updateFeed = (feedid, feed) => {
+        feeds.find((feed) => {
+            return feed._id === feedid;
+        })
+
+    }
 
     return (
         <div className="wrapper">
@@ -30,7 +46,7 @@ function App(props) {
             </div>
             <div className="grid content">
                 <div className="grid feeds">
-                    <FeedsView updated={dataAge} clickFunc={selectFeed} selected={feedID}/>
+                    <FeedsView updated={dataAge} clickFunc={selectFeed} selected={feedID} feeds={feeds}/>
                 </div>
                 <div className="grid feed">
                     <div className="grid articles">

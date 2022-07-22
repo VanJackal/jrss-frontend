@@ -11,7 +11,7 @@ function ItemView(props) {
     const [article, setArticle] = React.useState(null);
     React.useEffect(() => {
         async function updateContent() {
-            if (!article || article._id !== props.articleID) {
+            if (props.articleID && (!article || article._id !== props.articleID)) {
                 try {
                     setArticle(await updateArticle(props.articleID));
                 } catch (e) {

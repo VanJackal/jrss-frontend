@@ -1,10 +1,4 @@
-import axios from "axios";
 import React from "react";
-import config from './config.json';
-
-let getData = async () => {
-    return await (await axios.get(`${config.API}/feeds`)).data
-}
 
 let Header = () => {
     return (
@@ -30,25 +24,14 @@ const FeedListItem = ({selected,item, onClick}) => {
 }
 
 function FeedsView(props) {
-    const [rowData, setRowData] = React.useState([]);
     const [expanded, setExpanded] = React.useState([]);
-    React.useEffect(() => {
-        let updateData = async () => {
-            try {
-                setRowData(await getData());
-            } catch (e) {
-                console.log(e);
-            }
-        }
-        updateData()
-    }, [props.updated]);
 
     let Body = () => {
-        console.debug("New rowData:",rowData)
+        console.debug("New rowData:",props.feeds)
         return (
             <tbody>
             {
-                rowData.map((row) => {
+                props.feeds.map((row) => {
                     return (<FeedListItem item={row} key={row._id} onClick={props.clickFunc} selected={props.selected}/>)
                 })
             }
@@ -56,7 +39,7 @@ function FeedsView(props) {
         )
     }
 
-    if (!rowData) {
+    if (!props.feeds) {
         return (<p>Loading...</p>)
     } else {
         return (
