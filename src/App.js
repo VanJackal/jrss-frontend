@@ -32,7 +32,7 @@ function App(props) {
         getFeeds().then((feeds) => {setFeeds(feeds)})
     }, [dataAge])
 
-    const updateFeed = (feedid, feed) => {
+    const updateFeed = (feedid, feed) => {//TODO this function updates the feeds with any changes in its feed variable
         feeds.find((feed) => {
             return feed._id === feedid;
         })
