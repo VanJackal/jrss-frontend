@@ -13,7 +13,7 @@ let getFeeds = async () => {
 function App(props) {
     const [feedID, setFeedID] = React.useState(null);
     const selectFeed = React.useCallback(id => {
-        console.debug(`Selected new feed:`,id)
+        console.debug(`Selected new feed:`, id)
         setFeedID(id);
     }, [])
 
@@ -29,14 +29,18 @@ function App(props) {
     }
     const [feeds, setFeeds] = React.useState(null);
     React.useEffect(() => {
-        getFeeds().then((feeds) => {setFeeds(feeds)})
+        getFeeds().then((feeds) => {
+            setFeeds(feeds)
+        })
     }, [dataAge])
 
-    const updateFeed = (feedid, feed) => {//TODO this function updates the feeds with any changes in its feed variable
-        feeds.find((feed) => {
+    const incrementUnread = (feedid, inc) => {// use negative inc for marking read
+        let index = feeds.findIndex((feed) => {
             return feed._id === feedid;
         })
-
+        let tempFeeds = [...feeds]
+        tempFeeds[index].unread += inc;
+        setFeeds(tempFeeds);
     }
 
     return (
@@ -50,7 +54,8 @@ function App(props) {
                 </div>
                 <div className="grid feed">
                     <div className="grid articles">
-                        <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle}/>
+                        <ListView updated={dataAge} feedid={feedID} selected={articleID} clickFunc={selectArticle}
+                                  incUnread={incrementUnread}/>
                     </div>
                     <div className="grid article">
                         <ItemView articleID={articleID}/>

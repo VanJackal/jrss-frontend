@@ -2,11 +2,6 @@ import axios from "axios";
 import React from "react";
 import config from './config.json';
 
-function updateRead(article, readState) {
-    article.read = readState;
-    console.debug("updating readstate for: ", article)
-    axios.patch(`${config.API}/articles/${article._id}`, { read: readState });
-}
 
 let getData = async (feedid) => {
     return await (await axios.get(`${config.API}/feeds/${feedid}/articles`)).data
@@ -30,7 +25,7 @@ let ReadIndicator = () => {
     )
 }
 
-const ListItem = ({ item, articleID, clickFunc }) => {
+const ListItem = ({ item, articleID, clickFunc, updateRead}) => {
     const [read, setRead] = React.useState(item.read);
 
     let selState = false;
@@ -73,12 +68,20 @@ function ListView(props) {
         updateContent()
     }, [props.articleID, props.feedid, props.updated])
 
+    function updateRead(article, readState) {
+        console.log("UpdateRead: ", article)
+        article.read = readState;
+        props.incUnread(props.feedid, readState ? -1 : 1)
+        console.debug("updating readstate for: ", article)
+        axios.patch(`${config.API}/articles/${article._id}`, { read: readState });
+    }
+
     let Body = () => {
         return (
             <tbody>
                 {
                     rowData.map((item) => {
-                        return (<ListItem key={item._id} item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
+                        return (<ListItem updateRead={updateRead} key={item._id} item={item} articleID={props.selected} clickFunc={props.clickFunc} />)
                     })
                 }
             </tbody>
