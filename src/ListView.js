@@ -77,6 +77,9 @@ function ListView(props) {
     }
 
     let Body = () => {
+        rowData.sort((a,b) => {
+            return a.pubDate < b.pubDate
+        })
         return (
             <tbody>
                 {
